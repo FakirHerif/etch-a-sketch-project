@@ -1,8 +1,11 @@
 const container = document.querySelector(".container");
 const sizeValue = document.querySelector(".sizeValue");
 const sliderBar = document.querySelector(".sliderBar");
+const hover = document.querySelector(".hover")
 
 let mouseDown = false;
+let altElemanlar;
+let hoverActive = false;
 
 function createGrid(gridSize) {
     container.innerHTML = '';
@@ -15,7 +18,7 @@ function createGrid(gridSize) {
         container.appendChild(newDiv);
     }
 
-    const altElemanlar = document.querySelectorAll(".altEleman");
+    altElemanlar = document.querySelectorAll(".altEleman");
 
     altElemanlar.forEach(function (renkVer) {
         renkVer.addEventListener("mousedown", function () {
@@ -46,6 +49,29 @@ sizeValue.addEventListener("input", function () {
     sliderBar.textContent = `${gridSize} x ${gridSize}`;
     createGrid(gridSize);
 });
+
+function hoverColor() {
+    this.style.backgroundColor = "red";
+}
+
+hover.addEventListener("click", function() {
+    if (hoverActive) {
+        hover.innerHTML = "Hover: OFF";
+        hoverActive = false;
+
+        altElemanlar.forEach(function (renkVer) {
+            renkVer.removeEventListener("mouseover", hoverColor);
+        });
+    } else {
+        hover.innerHTML = "Hover: ON";
+        hoverActive = true;
+        altElemanlar.forEach(function (renkVer) {
+            renkVer.addEventListener("mouseover", hoverColor);
+        });
+    }
+});
+
+
 
 createGrid(16);
 sliderBar.textContent = "16 x 16";
