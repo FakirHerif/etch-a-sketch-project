@@ -2,23 +2,12 @@ const container = document.querySelector(".container");
 const sizeValue = document.querySelector(".sizeValue");
 const sliderBar = document.querySelector(".sliderBar")
 
-let setValue = 4;
+let setValue = 16;
 
-let mathSqrt = Math.sqrt(setValue);
+container.style.gridTemplateColumns = `repeat(${setValue}, 1fr)`;
+container.style.gridTemplateRows = `repeat(${setValue}, 1fr)`;
 
-container.style.gridTemplateColumns = `repeat(${mathSqrt}, 1fr)`;
-container.style.gridTemplateRows = `repeat(${mathSqrt}, 1fr)`;
-
-
-sizeValue.addEventListener("input", function() {
-    sliderBar.textContent = `${this.value} x ${this.value}`
-    setValue = this.value;
-    console.log(setValue);
-})
-
-
-for (let i = 0; i < setValue; i++) {
-    console.log("-----" + setValue)
+for (let i = 0; i < (setValue * setValue); i++) {
     var newDiv = document.createElement("div");
     newDiv.className = "altEleman"
     container.appendChild(newDiv);
@@ -32,4 +21,27 @@ altElemanlar.forEach(function(renkVer) {
   });
 });
 
+document.querySelector(".sliderBar").textContent = `${setValue} x ${setValue}`;
 
+sizeValue.addEventListener("input", function() {
+    container.innerHTML = '';
+    const gridSize = this.value;
+    container.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+    container.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+
+    for (let i = 0; i < (gridSize * gridSize); i++) {
+        var newDiv = document.createElement("div");
+        newDiv.className = "altEleman"
+        container.appendChild(newDiv);
+    };
+
+    const altElemanlar = document.querySelectorAll(".altEleman");
+
+    altElemanlar.forEach(function(renkVer) {
+        renkVer.addEventListener("click", function() {
+            renkVer.style.backgroundColor = "black";
+        });
+    });
+
+    document.querySelector(".sliderBar").textContent = `${gridSize} x ${gridSize}`;
+});
