@@ -26,6 +26,7 @@ eraserButton.addEventListener("click", function() {
         eraserButton.innerHTML = "Eraser: ON";
         rainbowActive = false;
         rainbowButton.innerHTML = "Rainbow: OFF";
+        selectedColor = "";
     }
 });
 
@@ -38,6 +39,7 @@ rainbowButton.addEventListener("click", function() {
         rainbowButton.innerHTML = "Rainbow: ON";
         eraserActive = false;
         eraserButton.innerHTML ="Eraser: OFF";
+        selectedColor = Math.floor(Math.random() * 360);
     }
 });
 
