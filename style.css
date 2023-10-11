@@ -1,8 +1,10 @@
 .container {
     display: grid;
-    border: 2px solid red;
-    height: 500px;
-    width: 500px;
+    border: 5px solid rgba(0, 238, 255, 0.877);
+    height: 750px;
+    width: 750px;
+    border-radius: 1%;
+    box-shadow: 6px 6px 14px rgb(0, 21, 255);
 }
 
 .altEleman {
@@ -12,3 +14,31 @@
     user-select: none;  /* KULLANICININ BASILI TUTUP ÇEKMESİNİ ENGELLER */
 }
 
+body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    background-color: rgba(237, 226, 226, 0.304);
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background-image: url(img/background.jpg);
+    background-repeat: no-repeat;
+
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    align-items: center;
+}
+
+.leftMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
