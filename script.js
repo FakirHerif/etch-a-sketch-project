@@ -2,7 +2,7 @@ const container = document.querySelector(".container");
 const sizeValue = document.querySelector(".sizeValue");
 const sliderBar = document.querySelector(".sliderBar");
 const hover = document.querySelector(".hover");
-const eraser = document.querySelector(".eraser");
+const eraserButton = document.querySelector(".eraser");
 const deleteAll = document.querySelector(".delete");
 const grid = document.querySelector(".grid");
 const colorPicker = document.getElementById("colorPicker");
@@ -14,7 +14,20 @@ let hoverActive = false;
 let isGridActive = true; 
 let selectedColor = "black";
 let rainbowActive = false;
+let eraserActive = false;
 
+
+eraserButton.addEventListener("click", function() {
+    if (eraserActive) {
+        eraserActive = false;
+        eraserButton.innerHTML = "Eraser: OFF";
+    } else {
+        eraserActive = true;
+        eraserButton.innerHTML = "Eraser: ON";
+        rainbowActive = false;
+        rainbowButton.innerHTML = "Rainbow: OFF";
+    }
+});
 
 rainbowButton.addEventListener("click", function() {
     if (rainbowActive) {
@@ -23,6 +36,8 @@ rainbowButton.addEventListener("click", function() {
     } else {
         rainbowActive = true;
         rainbowButton.innerHTML = "Rainbow: ON";
+        eraserActive = false;
+        eraserButton.innerHTML ="Eraser: OFF";
     }
 });
 
@@ -45,6 +60,8 @@ colorPicker.addEventListener("input", function () {
     selectedColor = colorPicker.value;
     rainbowActive = false;
     rainbowButton.innerHTML = "Rainbow: OFF";
+    eraserActive = false;
+    eraserButton.innerHTML = "Eraser: OFF";
 
     // Bu renk ile karenin arka plan rengini değiştiriyoruz
     altElemanlar.forEach(function (renkVer) {
@@ -73,6 +90,8 @@ function createGrid(gridSize) {
             mouseDown = true;
             if (rainbowActive) {
                 renkVer.style.backgroundColor = rainbowColor();
+            } else if (eraserActive) {
+                renkVer.style.backgroundColor = "";
             } else {
                 renkVer.style.backgroundColor = selectedColor;
             }
@@ -88,6 +107,8 @@ function createGrid(gridSize) {
             if (mouseDown) {
                 if (rainbowActive) {
                     renkVer.style.backgroundColor = rainbowColor();
+                } else if (eraserActive) {
+                    renkVer.style.backgroundColor = "";
                 } else {
                     renkVer.style.backgroundColor = selectedColor;
                 }
@@ -112,11 +133,22 @@ sizeValue.addEventListener("input", function () {
     const gridSize = this.value;
     sliderBar.textContent = `${gridSize} x ${gridSize}`;
     createGrid(gridSize);
+        hover.innerHTML = "Hover: OFF";
+        grid.innerHTML = "Grid: ON";
+        rainbowButton.innerHTML = "Rainbow: OFF";
+        eraserButton.innerHTML = "Eraser: OFF"
+        mouseDown = false;
+        hoverActive = false;
+        isGridActive = true; 
+        rainbowActive = false;
+        eraserActive = false;
 });
 
 function hoverColor() {
     if (rainbowActive) {
         this.style.backgroundColor = rainbowColor();
+    } else if (eraserActive) {
+        this.style.backgroundColor = "";
     } else {
         this.style.backgroundColor = selectedColor;
     }
@@ -133,6 +165,9 @@ hover.addEventListener("click", function() {
     } else {
         hover.innerHTML = "Hover: ON";
         hoverActive = true;
+
+
+
         altElemanlar.forEach(function (renkVer) {
             renkVer.addEventListener("mouseover", hoverColor);
         });
