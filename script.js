@@ -21,6 +21,7 @@ eraserButton.addEventListener("click", function() {
     if (eraserActive) {
         eraserActive = false;
         eraserButton.innerHTML = "Eraser: OFF";
+        selectedColor = colorPicker.value;
     } else {
         eraserActive = true;
         eraserButton.innerHTML = "Eraser: ON";
@@ -34,6 +35,7 @@ rainbowButton.addEventListener("click", function() {
     if (rainbowActive) {
         rainbowActive = false;
         rainbowButton.innerHTML = "Rainbow: OFF";
+        selectedColor = colorPicker.value;
     } else {
         rainbowActive = true;
         rainbowButton.innerHTML = "Rainbow: ON";
@@ -144,6 +146,7 @@ sizeValue.addEventListener("input", function () {
         isGridActive = true; 
         rainbowActive = false;
         eraserActive = false;
+        selectedColor = colorPicker.value;
 });
 
 function hoverColor() {
@@ -197,12 +200,6 @@ grid.addEventListener("click", function() {
             renkVer.style.border = "none";
         });
         isGridActive = false;
-        hover.innerHTML = "Hover: OFF";
-        hoverActive = false;
-
-        altElemanlar.forEach(function (renkVer) {
-            renkVer.removeEventListener("mouseover", hoverColor);
-        });
         grid.innerHTML = "Grid: OFF";
     } else {
         // Eğer grid kapalıysa, grid'i aç
