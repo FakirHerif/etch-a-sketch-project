@@ -6,17 +6,45 @@ const eraser = document.querySelector(".eraser");
 const deleteAll = document.querySelector(".delete");
 const grid = document.querySelector(".grid");
 const colorPicker = document.getElementById("colorPicker");
+const rainbowButton = document.querySelector(".rainbow")
 
 let mouseDown = false;
 let altElemanlar;
 let hoverActive = false;
 let isGridActive = true; 
 let selectedColor = "black";
+let rainbowActive = false;
+
+
+rainbowButton.addEventListener("click", function() {
+    if (rainbowActive) {
+        rainbowActive = false;
+        rainbowButton.innerHTML = "Rainbow: OFF";
+    } else {
+        rainbowActive = true;
+        rainbowButton.innerHTML = "Rainbow: ON";
+    }
+});
+
+
+function getRandomColor() {
+    const hue = Math.floor(Math.random() * 360);
+    const saturation = '100%';
+    const lightness = '50%';
+
+    return `hsl(${hue}, ${saturation}, ${lightness})`;
+}
+
+function rainbowColor() {
+    return getRandomColor();
+}
 
 
 colorPicker.addEventListener("input", function () {
     // Kullanıcının seçtiği rengi alıyoruz
     selectedColor = colorPicker.value;
+    rainbowActive = false;
+    rainbowButton.innerHTML = "Rainbow: OFF";
 
     // Bu renk ile karenin arka plan rengini değiştiriyoruz
     altElemanlar.forEach(function (renkVer) {
@@ -43,7 +71,11 @@ function createGrid(gridSize) {
     altElemanlar.forEach(function (renkVer) {
         renkVer.addEventListener("mousedown", function () {
             mouseDown = true;
-            renkVer.style.backgroundColor = selectedColor;
+            if (rainbowActive) {
+                renkVer.style.backgroundColor = rainbowColor();
+            } else {
+                renkVer.style.backgroundColor = selectedColor;
+            }
             hover.innerHTML = "Hover: OFF";
             hoverActive = false;
 
@@ -54,7 +86,11 @@ function createGrid(gridSize) {
 
         renkVer.addEventListener("mouseover", function () {
             if (mouseDown) {
-                renkVer.style.backgroundColor = selectedColor;
+                if (rainbowActive) {
+                    renkVer.style.backgroundColor = rainbowColor();
+                } else {
+                    renkVer.style.backgroundColor = selectedColor;
+                }
                 hoverActive = false;
             }
         });
@@ -79,7 +115,11 @@ sizeValue.addEventListener("input", function () {
 });
 
 function hoverColor() {
-    this.style.backgroundColor = selectedColor;
+    if (rainbowActive) {
+        this.style.backgroundColor = rainbowColor();
+    } else {
+        this.style.backgroundColor = selectedColor;
+    }
 }
 
 hover.addEventListener("click", function() {
