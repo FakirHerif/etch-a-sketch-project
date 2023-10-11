@@ -5,11 +5,27 @@ const hover = document.querySelector(".hover");
 const eraser = document.querySelector(".eraser");
 const deleteAll = document.querySelector(".delete");
 const grid = document.querySelector(".grid");
+const colorPicker = document.getElementById("colorPicker");
 
 let mouseDown = false;
 let altElemanlar;
 let hoverActive = false;
 let isGridActive = true; 
+let selectedColor = "black";
+
+
+colorPicker.addEventListener("input", function () {
+    // Kullanıcının seçtiği rengi alıyoruz
+    selectedColor = colorPicker.value;
+
+    // Bu renk ile karenin arka plan rengini değiştiriyoruz
+    altElemanlar.forEach(function (renkVer) {
+        renkVer.addEventListener("click", function () {
+            renkVer.style.backgroundColor = selectedColor;
+        });
+    });
+})
+
 
 function createGrid(gridSize) {
     container.innerHTML = '';
@@ -27,7 +43,7 @@ function createGrid(gridSize) {
     altElemanlar.forEach(function (renkVer) {
         renkVer.addEventListener("mousedown", function () {
             mouseDown = true;
-            renkVer.style.backgroundColor = "black";
+            renkVer.style.backgroundColor = selectedColor;
             hover.innerHTML = "Hover: OFF";
             hoverActive = false;
 
@@ -38,7 +54,7 @@ function createGrid(gridSize) {
 
         renkVer.addEventListener("mouseover", function () {
             if (mouseDown) {
-                renkVer.style.backgroundColor = "black";
+                renkVer.style.backgroundColor = selectedColor;
                 hoverActive = false;
             }
         });
@@ -63,7 +79,7 @@ sizeValue.addEventListener("input", function () {
 });
 
 function hoverColor() {
-    this.style.backgroundColor = "red";
+    this.style.backgroundColor = selectedColor;
 }
 
 hover.addEventListener("click", function() {
